@@ -1,0 +1,60 @@
+<div
+  style="max-width: 300px;
+margin-left: auto;
+margin-right: auto;"
+>
+  <img src="/assets/r2.jpeg" style="max-width: 100%;" />
+</div>
+<div style="display: flex;justify-content: space-between;">
+  <div>
+    <div>
+      <label>组件</label>
+      <select [(ngModel)]="newField.alias">
+        <option value="FieldString" label="FieldString"></option>
+        <option value="FieldString" label="FieldNumber"></option>
+        <option value="FieldDatetime" label="FieldDatetime"></option>
+        <option value="FieldBoolean" label="FieldBoolean"></option>
+      </select>
+    </div>
+    <div>
+      标签
+      <input [(ngModel)]="newField.label" />
+    </div>
+    <div>
+      字段
+      <input [(ngModel)]="newField.field" />
+    </div>
+
+    <button (click)="addField()">添加字段</button>
+  </div>
+  <div>
+    <div style="display: flex;justify-content: space-between;">
+      <div
+        (click)="state = TabView.Human"
+        [class.active]="TabView.Human == state"
+      >
+        人类语言
+      </div>
+      <div
+        (click)="state = TabView.Robot"
+        [class.active]="TabView.Robot == state"
+      >
+        机器语言
+      </div>
+    </div>
+    <ng-container *ngIf="TabView.Human == state">
+      <ul>
+        <li>需要一个表单</li>
+        <li *ngFor="let field of meta.fields">需要{{ field.label }}字段</li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="TabView.Robot == state">
+      {{ meta | json }}
+    </ng-container>
+  </div>
+</div>
+<hr />
+表单:
+<ng-container *ngIf="finish">
+  <editor [meta]="meta"></editor>
+</ng-container>
